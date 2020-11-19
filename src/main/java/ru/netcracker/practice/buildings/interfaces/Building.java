@@ -1,6 +1,6 @@
 package ru.netcracker.practice.buildings.interfaces;
 
-public interface Building {
+public interface Building extends Cloneable {
     int getBuildingFloors();
 
     int getBuildingSpaces();
@@ -17,11 +17,13 @@ public interface Building {
 
     Space getSpace(int index);
 
-    boolean changeSpace(int index, Space newSpace);
+    boolean setSpace(int index, Space newSpace);
 
     Space removeSpace(int index);
 
     Space getBestSpace();
 
     Space[] getSpacesSorted();
+
+    Object clone() throws CloneNotSupportedException;
 }

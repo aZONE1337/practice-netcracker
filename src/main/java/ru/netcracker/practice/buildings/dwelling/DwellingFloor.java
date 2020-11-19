@@ -76,7 +76,7 @@ public class DwellingFloor implements Floor, Serializable, Cloneable {
 
     //изменение квартиры по номеру и ссылке на объект квартиры
     @Override
-    public boolean changeSpace(int index, Space newSpace) {
+    public boolean setSpace(int index, Space newSpace) {
         //проверка номера квартиры
         if (!isSpaceIndex(index)) {
             throw new SpaceIndexOutOfBoundsException(index);

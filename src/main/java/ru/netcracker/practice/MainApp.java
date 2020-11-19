@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class MainApp {
     public static void main(String[] args) {
-        Space o11 = new Office(11.0f, 1);
+        Office o11 = new Office(11.0f, 1);
         Space o12 = new Office(12.0f, 2);
         Space o13 = new Office(13.0f, 3);
 
@@ -41,7 +41,7 @@ public class MainApp {
 
         ((OfficeBuilding) ob).addOffice(1, new Office(9999.0f, 99));
         ob.changeFloor(2, new OfficeFloor(new Space[]{new Office(777.0f, 77)}));
-        ob.changeSpace(3, new Office(5555.0f, 55));
+        ob.setSpace(3, new Office(5555.0f, 55));
         ob.removeSpace(2);
 
         System.out.println("best space: " + ob.getBestSpace() +
@@ -59,9 +59,13 @@ public class MainApp {
             Buildings.outputBuilding(obRead, System.out);
             System.out.println(obRead.toString());
 
-            OfficeBuilding clone = (OfficeBuilding) ((OfficeBuilding) ob).clone();
-            OfficeFloor clone1 = (OfficeFloor) ((OfficeFloor) of1).clone();
-            Office clone2 = (Office) ((Office) o11).clone();
+            OfficeBuilding clone = (OfficeBuilding) ob.clone();
+            OfficeFloor clone1 = (OfficeFloor) of1.clone();
+            Office clone2 = (Office) o11.clone();
+
+            o11.setArea(100000000.0f);
+            of1.setSpace(1, new Office(11111111111.0f, 99999999));
+            ob.setSpace(2, new Office(1000000.0f, 1000000000));
 
             System.out.println("Office clone:");
             System.out.println(clone2 == o11);
@@ -71,7 +75,7 @@ public class MainApp {
             System.out.println("OfficeFloor clone:");
             System.out.println(clone1 == of1);
             System.out.println(clone1.equals(of1));
-            System.out.println(clone1.getClass() == of2.getClass());
+            System.out.println(clone1.getClass() == of1.getClass());
 
             System.out.println("OfficeBuilding clone:");
             System.out.println(clone == ob);

@@ -8,9 +8,9 @@ import ru.netcracker.practice.buildings.util.list.SinglyLinkedList;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class OfficeFloor implements Floor, Serializable, Cloneable {
-    private SinglyLinkedList<Space> offices;
-    private int officesAmount;
+public class OfficeFloor implements Floor, Serializable {
+    private final SinglyLinkedList<Space> offices;
+    private final int officesAmount;
 
     public OfficeFloor() {
         this.offices = null;
@@ -70,7 +70,11 @@ public class OfficeFloor implements Floor, Serializable, Cloneable {
     public Space[] getSpacesAsArray() {
         Space[] offices = new Office[this.offices.size()];
         for (int i = 0; i < offices.length; i++) {
-            offices[i] = this.offices.get(i);
+            try {
+                offices[i] = (Space) this.offices.get(i).clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
         return offices;
     }
@@ -86,7 +90,7 @@ public class OfficeFloor implements Floor, Serializable, Cloneable {
 
     //изменение по ссылке
     @Override
-    public boolean changeSpace(int index, Space space) {
+    public boolean setSpace(int index, Space space) {
         if (!isSpaceIndex(index)) {
             throw new SpaceIndexOutOfBoundsException(index);
         }
@@ -159,6 +163,6 @@ public class OfficeFloor implements Floor, Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new OfficeFloor(this.getSpacesAsArray());
+        return new OfficeFloor(getSpacesAsArray());
     }
 }

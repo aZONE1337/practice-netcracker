@@ -1,6 +1,6 @@
 package ru.netcracker.practice.buildings.interfaces;
 
-public interface Floor extends Comparable<Floor> {
+public interface Floor extends Comparable<Floor>, Cloneable {
     int getTotalSpaces();
 
     float getTotalArea();
@@ -11,11 +11,13 @@ public interface Floor extends Comparable<Floor> {
 
     Space getSpace(int index);
 
-    boolean changeSpace(int index, Space newSpace);
+    boolean setSpace(int index, Space newSpace);
 
     boolean addSpace(int index, Space newSpace);
 
     Space removeSpace(int index);
 
     Space getBestSpace();
+
+    Object clone() throws CloneNotSupportedException;
 }

@@ -7,7 +7,7 @@ import ru.netcracker.practice.buildings.interfaces.Space;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Office implements Space, Serializable, Cloneable {
+public class Office implements Space, Serializable {
     private static final float DEFAULT_AREA = 250.0f;
     private static final int DEFAULT_ROOMS = 1;
 

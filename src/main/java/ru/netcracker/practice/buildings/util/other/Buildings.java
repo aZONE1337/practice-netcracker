@@ -7,6 +7,7 @@ import ru.netcracker.practice.buildings.util.factory.BuildingFactory;
 import ru.netcracker.practice.buildings.util.factory.DwellingFactory;
 
 import java.io.*;
+import java.util.Comparator;
 
 public class Buildings {
 
@@ -84,18 +85,12 @@ public class Buildings {
         return sb.substring(0, sb.toString().length() - 1);
     }
 
-    public static <T extends Comparable<T>> void sort(T[] objects, Order order) {
+    public static <T extends Comparable<T>> void sort(T[] objects, Comparator<T> comparator) {
         boolean isSorted = false;
-        boolean graterOrLess;
         while (!isSorted) {
             isSorted = true;
             for (int i = 0; i < objects.length - 1; i++) {
-                if (order == Order.ASC) {
-                    graterOrLess = objects[i].compareTo(objects[i + 1]) < 0;
-                } else {
-                    graterOrLess = objects[i + 1].compareTo(objects[i]) < 0;
-                }
-                if (graterOrLess) {
+                if (comparator.compare(objects[i], objects[i + 1]) < 0) {
                     isSorted = false;
                     T temp = objects[i];
                     objects[i] = objects[i + 1];

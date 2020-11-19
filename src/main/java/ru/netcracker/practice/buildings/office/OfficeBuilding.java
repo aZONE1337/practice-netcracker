@@ -6,13 +6,14 @@ import ru.netcracker.practice.buildings.interfaces.Building;
 import ru.netcracker.practice.buildings.interfaces.Floor;
 import ru.netcracker.practice.buildings.interfaces.Space;
 import ru.netcracker.practice.buildings.util.list.DoublyLinkedList;
+import ru.netcracker.practice.buildings.util.other.Buildings;
 import ru.netcracker.practice.buildings.util.other.MyPair;
 import ru.netcracker.practice.buildings.util.list.SinglyLinkedList;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class OfficeBuilding implements Building, Serializable, Cloneable {
+public class OfficeBuilding implements Building, Serializable {
     private DoublyLinkedList<Floor> floors;
     private int floorsAmount;
 
@@ -77,7 +78,11 @@ public class OfficeBuilding implements Building, Serializable, Cloneable {
     public Floor[] getFloorsAsArray() {
         Floor[] officeFloors = new Floor[floors.size()];
         for (int i = 0; i < floors.size(); i++) {
-            officeFloors[i] = floors.get(i);
+            try {
+                officeFloors[i] = (Floor) floors.get(i).clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
         return officeFloors;
     }
@@ -128,11 +133,8 @@ public class OfficeBuilding implements Building, Serializable, Cloneable {
     }
 
     //изменение офиса по номеру и ссылке
-    //переименовать setSpace
-    //добавить sort с компаратором
-    //исправить clone(), везде добавить clone() к Space, а потом к Floor
     @Override
-    public boolean changeSpace(int index, Space newSpace) {
+    public boolean setSpace(int index, Space newSpace) {
         Space curOffice = getSpace(index);
         for (Floor floor : floors) {
             //убрать преобразование
@@ -192,15 +194,7 @@ public class OfficeBuilding implements Building, Serializable, Cloneable {
             }
         }
         //bubble sort
-        for (int i = 0; i < offices.length - 1; i++) {
-            for (int j = 0; j < offices.length - i - 1; j++) {
-                if (offices[j].getArea() > offices[j + 1].getArea()) {
-                    Space temp = offices[j];
-                    offices[j] = offices[j + 1];
-                    offices[j + 1] = temp;
-                }
-            }
-        }
+        Buildings.sort(offices, Comparable::compareTo);
         return offices;
     }
 

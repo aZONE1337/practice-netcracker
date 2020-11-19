@@ -27,8 +27,8 @@ public class PlacementExchanger {
         Space sp1 = fl1.getSpace(index1);
         Space sp2 = fl2.getSpace(index2);
         if (isExchangeable(sp1, sp2)) {
-            fl1.changeSpace(index1, sp2);
-            fl2.changeSpace(index2, sp1);
+            fl1.setSpace(index1, sp2);
+            fl2.setSpace(index2, sp1);
         } else {
             throw new InexchangeableSpacesException();
         }

@@ -7,7 +7,6 @@ import ru.netcracker.practice.buildings.interfaces.Floor;
 import ru.netcracker.practice.buildings.interfaces.Space;
 import ru.netcracker.practice.buildings.util.other.Buildings;
 import ru.netcracker.practice.buildings.util.other.MyPair;
-import ru.netcracker.practice.buildings.util.other.Order;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -127,7 +126,7 @@ public class Dwelling implements Building, Serializable, Cloneable {
 
     //изменение квартиры по номеру в доме и новому объекту
     @Override
-    public boolean changeSpace(int index, Space newSpace) {
+    public boolean setSpace(int index, Space newSpace) {
         Space curFlat = getSpace(index);
         for (Floor dwellingFloor : floors) {
             Space[] spaces = dwellingFloor.getSpacesAsArray();
@@ -188,7 +187,7 @@ public class Dwelling implements Building, Serializable, Cloneable {
             }
         }
         //bubble sort
-        Buildings.sort(flats, Order.ASC);
+        Buildings.sort(flats, Comparable::compareTo);
         return flats;
     }
 
