@@ -7,12 +7,12 @@ import ru.netcracker.practice.buildings.util.factory.BuildingFactory;
 import ru.netcracker.practice.buildings.util.factory.DwellingFactory;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 
 public class Buildings {
 
-    private static final DwellingFactory DEFAULT_FACTORY = new DwellingFactory();
-    private static BuildingFactory buildingFactory = DEFAULT_FACTORY;
+    private static BuildingFactory buildingFactory = new DwellingFactory();
 
     public static void outputBuilding(Building building, OutputStream out) throws IOException {
         BufferedOutputStream bufOut = new BufferedOutputStream(out);
@@ -27,8 +27,7 @@ public class Buildings {
         while ((x = bufIn.read()) != 10) {
             sb.append((char) x);
         }
-        String[] params = sb.toString().split(" ");
-        return getBuilding(params);
+        return getBuildingFromString(sb.toString());
     }
 
     public static void writeBuilding(Building building, Writer out) throws IOException {
@@ -40,34 +39,35 @@ public class Buildings {
     public static Building readBuilding(Reader in) throws IOException {
         BufferedReader bufIn = new BufferedReader(in);
         String line = bufIn.readLine();
-        String[] params = line.split(" ");
-        return getBuilding(params);
+        return getBuildingFromString(line);
     }
 
     public static void serializeBuilding(Building building, OutputStream out) throws IOException {
         ObjectOutputStream objOut = new ObjectOutputStream(out);
         objOut.writeObject(building);
+        objOut.flush();
     }
 
-    public static Building deserializeBuilding(InputStream in) throws IOException, ClassNotFoundException {
+    public static Object deserializeBuilding(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream objIn = new ObjectInputStream(in);
-        return (Building) objIn.readObject();
+        return objIn.readObject();
     }
 
-    private static Building getBuilding(String[] params) {
+    public static Building getBuildingFromString(String building) {
+        String[] params = building.split(" ");
         Floor[] floors = new Floor[Integer.parseInt(params[0])];
         int k = 1;
         for (int i = 0; i < Integer.parseInt(params[0]); i++) {
             int spacesAmount = Integer.parseInt(params[k]);
             Space[] spaces = new Space[spacesAmount];
             for (int j = 0; j < spacesAmount; j++) {
-                Space space = createSpaceByCurrentFactory(Integer.parseInt(params[j * 2 + k + 1]), Float.parseFloat(params[j * 2 + k + 2]));
+                Space space = createSpace(Integer.parseInt(params[j * 2 + k + 1]), Float.parseFloat(params[j * 2 + k + 2]));
                 spaces[j] = space;
             }
-            floors[i] = createFloorByCurrentFactory(spaces);
+            floors[i] = createFloor(spaces);
             k += 2 * spacesAmount + 1;
         }
-        return createBuildingByCurrentFactory(floors);
+        return createBuilding(floors);
     }
 
     private static String deconstruct(Building building) {
@@ -100,31 +100,35 @@ public class Buildings {
         }
     }
 
-    public static Space createSpaceByCurrentFactory(float area) {
+    public static <T extends Space> Space createSpace(float area) {
         return buildingFactory.createSpace(area);
     }
 
-    public static Space createSpaceByCurrentFactory(int rooms, float area) {
+    public static Space createSpace(int rooms, float area) {
         return buildingFactory.createSpace(rooms, area);
     }
 
-    public static Floor createFloorByCurrentFactory(int spacesAmount) {
+    public static Floor createFloor(int spacesAmount) {
         return buildingFactory.createFloor(spacesAmount);
     }
 
-    public static Floor createFloorByCurrentFactory(Space[] spaces) {
+    public static <T extends Floor> Floor createFloor(Space[] spaces) {
         return buildingFactory.CreateFloor(spaces);
     }
 
-    public static Building createBuildingByCurrentFactory(int floorsAmount, int[] spacesOnFloor) {
+    public static Building createBuilding(int floorsAmount, int[] spacesOnFloor) {
         return buildingFactory.createBuilding(floorsAmount, spacesOnFloor);
     }
 
-    public static Building createBuildingByCurrentFactory(Floor[] floors) {
+    public static <T extends Building> Building createBuilding(Floor[] floors) {
         return buildingFactory.createBuilding(floors);
     }
 
     public static void setBuildingFactory(BuildingFactory buildingFactory) {
         Buildings.buildingFactory = buildingFactory;
+    }
+
+    public static SynchronizedFloor synchronizedFloor(Floor floor) {
+        return new SynchronizedFloor(floor);
     }
 }

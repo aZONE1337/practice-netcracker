@@ -18,7 +18,7 @@ public class OfficeFloor implements Floor, Serializable {
     }
 
     //принимает массив
-    public OfficeFloor(Space[] offices) {
+    public OfficeFloor(Space... offices) {
         this.offices = new SinglyLinkedList<>();
         for (Space office : offices) {
             this.offices.add(office);
@@ -33,6 +33,14 @@ public class OfficeFloor implements Floor, Serializable {
             this.offices.add(new Office());
         }
         this.officesAmount = officesAmount;
+    }
+
+    public SinglyLinkedList<Space> getOffices() {
+        return offices;
+    }
+
+    public int getOfficesAmount() {
+        return officesAmount;
     }
 
     //возвращает действительное количество офисов
@@ -144,7 +152,7 @@ public class OfficeFloor implements Floor, Serializable {
         for (Space space : offices) {
             sb.append(space.toString());
         }
-        return "OfficeFloor " + officesAmount + ", " + sb.toString();
+        return "Office floor " + officesAmount + ", " + sb.toString();
     }
 
     @Override

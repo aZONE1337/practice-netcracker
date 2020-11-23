@@ -3,10 +3,11 @@ package ru.netcracker.practice.buildings.dwelling.hotel;
 import ru.netcracker.practice.buildings.dwelling.DwellingFloor;
 import ru.netcracker.practice.buildings.interfaces.Space;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class HotelFloor extends DwellingFloor {
+public class HotelFloor extends DwellingFloor  implements Serializable {
     private static final int STARS_DEFAULT = 1;
     private int stars;
 
@@ -20,7 +21,7 @@ public class HotelFloor extends DwellingFloor {
         this.stars = STARS_DEFAULT;
     }
 
-    public HotelFloor(Space[] flats) {
+    public HotelFloor(Space... flats) {
         super(flats);
         this.stars = STARS_DEFAULT;
     }
@@ -57,7 +58,7 @@ public class HotelFloor extends DwellingFloor {
 
     @Override
     public String toString() {
-        return super.toString().replace("DwellingFLoor", "HotelFloor " + getStars() + ",");
+        return super.toString().replace("Dwelling floor", "Hotel floor " + getStars() + ",");
     }
 
     @Override

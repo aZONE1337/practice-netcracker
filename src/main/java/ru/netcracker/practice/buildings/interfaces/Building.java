@@ -1,5 +1,7 @@
 package ru.netcracker.practice.buildings.interfaces;
 
+import ru.netcracker.practice.buildings.util.list.DoublyLinkedList;
+
 public interface Building extends Cloneable {
     int getBuildingFloors();
 

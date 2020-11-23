@@ -23,7 +23,7 @@ public class OfficeBuilding implements Building, Serializable {
     }
 
     //количество этажей и массив количества офисов
-    public OfficeBuilding(int floorsAmount, int[] officesOnFloor) {
+    public OfficeBuilding(int floorsAmount, int... officesOnFloor) {
         this.floors = new DoublyLinkedList<>();
         this.floorsAmount = floorsAmount;
         if (floorsAmount == officesOnFloor.length) {
@@ -34,12 +34,24 @@ public class OfficeBuilding implements Building, Serializable {
     }
 
     //принимает массив этажей
-    public OfficeBuilding(Floor[] floors) {
+    public OfficeBuilding(Floor... floors) {
         this.floors = new DoublyLinkedList<>();
         for (Floor OfficeFloor : floors) {
             this.floors.add(OfficeFloor);
         }
         floorsAmount = floors.length;
+    }
+
+    public void setFloors(DoublyLinkedList<Floor> floors) {
+        this.floors = floors;
+    }
+
+    public int getFloorsAmount() {
+        return floorsAmount;
+    }
+
+    public void setFloorsAmount(int floorsAmount) {
+        this.floorsAmount = floorsAmount;
     }
 
     //возвращает общее количество этажей
@@ -226,7 +238,7 @@ public class OfficeBuilding implements Building, Serializable {
         for (Floor floor : floors) {
             sb.append(floor.toString());
         }
-        return "OfficeBuilding " + floorsAmount + ", " + sb.toString();
+        return "Office building " + floorsAmount + ", " + sb.toString();
     }
 
     @Override

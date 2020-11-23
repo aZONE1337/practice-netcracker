@@ -27,7 +27,7 @@ public class DwellingFloor implements Floor, Serializable, Cloneable {
     }
 
     //конструктор, принимающий массив квартир
-    public DwellingFloor(Space[] flats) {
+    public DwellingFloor(Space... flats) {
         this.flats = flats;
         this.flatsAmount = flats.length;
     }
@@ -46,6 +46,22 @@ public class DwellingFloor implements Floor, Serializable, Cloneable {
             totalArea += flat.getArea();
         }
         return totalArea;
+    }
+
+    public Space[] getFlats() {
+        return flats;
+    }
+
+    public void setFlats(Space... flats) {
+        this.flats = flats;
+    }
+
+    public int getFlatsAmount() {
+        return flatsAmount;
+    }
+
+    public void setFlatsAmount(int flatsAmount) {
+        this.flatsAmount = flatsAmount;
     }
 
     //получение количества комнат квартир этажа
@@ -143,7 +159,7 @@ public class DwellingFloor implements Floor, Serializable, Cloneable {
         for (Space flat : flats) {
             sb.append(flat.toString());
         }
-        return "OfficeFloor " + flatsAmount + ", " + sb.toString();
+        return "Dwelling floor " + flatsAmount + ", " + sb.toString();
     }
 
     @Override

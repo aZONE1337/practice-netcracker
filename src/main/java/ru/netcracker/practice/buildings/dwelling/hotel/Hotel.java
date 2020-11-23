@@ -5,15 +5,16 @@ import ru.netcracker.practice.buildings.dwelling.Flat;
 import ru.netcracker.practice.buildings.interfaces.Floor;
 import ru.netcracker.practice.buildings.interfaces.Space;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Hotel extends Dwelling {
+public class Hotel extends Dwelling implements Serializable {
 
-    public Hotel(int floorsAmount, int[] flatsOnFloor) {
+    public Hotel(int floorsAmount, int... flatsOnFloor) {
         super(floorsAmount, flatsOnFloor);
     }
 
-    public Hotel(Floor[] floors) {
+    public Hotel(Floor... floors) {
         super(floors);
     }
 

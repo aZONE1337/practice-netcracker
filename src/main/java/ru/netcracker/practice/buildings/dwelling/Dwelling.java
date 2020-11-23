@@ -13,8 +13,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Dwelling implements Building, Serializable, Cloneable {
-    private Floor[] floors;
-    private int floorsAmount;
+    private final Floor[] floors;
+    private final int floorsAmount;
+
 
     //конструктор по умолчанию
     public Dwelling() {
@@ -23,7 +24,7 @@ public class Dwelling implements Building, Serializable, Cloneable {
     }
 
     //конструктор по количеству этажей и количеству квартир на каждом
-    public Dwelling(int floorsAmount, int[] flatsOnFloor) {
+    public Dwelling(int floorsAmount, int... flatsOnFloor) {
         this.floorsAmount = floorsAmount;
         this.floors = new Floor[floorsAmount];
         if (floorsAmount == flatsOnFloor.length) {
@@ -34,7 +35,7 @@ public class Dwelling implements Building, Serializable, Cloneable {
     }
 
     //конструктор по массиву этажей
-    public Dwelling(Floor[] floors) {
+    public Dwelling(Floor... floors) {
         this.floors = floors;
         this.floorsAmount = floors.length;
     }
@@ -205,7 +206,7 @@ public class Dwelling implements Building, Serializable, Cloneable {
         for (Floor floor : floors) {
             sb.append(floor.toString());
         }
-        return "OfficeBuilding " + floorsAmount + ", " + sb.toString();
+        return "Dwelling " + floorsAmount + ", " + sb.toString();
     }
 
     @Override

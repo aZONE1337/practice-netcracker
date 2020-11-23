@@ -1,5 +1,7 @@
 package ru.netcracker.practice.buildings.interfaces;
 
+import ru.netcracker.practice.buildings.util.list.SinglyLinkedList;
+
 public interface Floor extends Comparable<Floor>, Cloneable {
     int getTotalSpaces();
 

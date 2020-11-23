@@ -6,13 +6,17 @@ import ru.netcracker.practice.buildings.interfaces.Space;
 import ru.netcracker.practice.buildings.office.Office;
 import ru.netcracker.practice.buildings.office.OfficeBuilding;
 import ru.netcracker.practice.buildings.office.OfficeFloor;
+import ru.netcracker.practice.buildings.threads.Cleaner;
+import ru.netcracker.practice.buildings.threads.Repairer;
 import ru.netcracker.practice.buildings.util.other.Buildings;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainApp {
     public static void main(String[] args) {
@@ -53,9 +57,11 @@ public class MainApp {
         System.out.println("Office N3 : " + ob.getSpace(3));
         System.out.println(Arrays.toString(ob.getFloorsAsArray()));
         System.out.println(Arrays.toString(ob.getSpacesSorted()));
+
+        //IO, serialization, clone tests
         try {
             Buildings.serializeBuilding(ob, new FileOutputStream(new File("building.ser")));
-            Building obRead = Buildings.deserializeBuilding(new FileInputStream(new File("building.ser")));
+            Building obRead = (Building) Buildings.deserializeBuilding(new FileInputStream(new File("building.ser")));
             Buildings.outputBuilding(obRead, System.out);
             System.out.println(obRead.toString());
 
@@ -87,5 +93,19 @@ public class MainApp {
         } catch (IOException | ClassNotFoundException | CloneNotSupportedException e) {
             e.printStackTrace();
         }
+
+        //thread tests
+        Space[] spaces1 = new Space[100];
+        Space[] spaces2 = new Space[100];
+        for (int i = 0; i < 100; i++) {
+            spaces1[i] = new Office(15.0f, 1);
+            spaces2[i] = new Office(10.0f, 3);
+        }
+        Floor testFloor1 = new OfficeFloor(spaces1);
+        Floor testFloor2 = new OfficeFloor(spaces2);
+        Thread repairer = new Repairer(testFloor1);
+        Thread cleaner = new Cleaner(testFloor2);
+        repairer.start();
+        cleaner.start();
     }
 }
