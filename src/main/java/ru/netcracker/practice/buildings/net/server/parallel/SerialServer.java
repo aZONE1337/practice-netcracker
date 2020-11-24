@@ -23,8 +23,8 @@ public class SerialServer {
                 Socket client = server.accept();
                 System.out.println("Client connected");
 
-                executorService.execute(new ServerThread(client));
-                System.out.println("Started thread #" + ++count);
+                executorService.execute(new ServerThread(client, ++count));
+                System.out.println("Started thread #" + count);
 
                 System.out.println("Waiting for new client...");
             }
@@ -35,9 +35,11 @@ public class SerialServer {
 
     private static class ServerThread implements Runnable {
         private final Socket client;
+        private final int number;
 
-        public ServerThread(Socket client) {
+        public ServerThread(Socket client, int number) {
             this.client = client;
+            this.number = number;
         }
 
         @Override
@@ -49,7 +51,12 @@ public class SerialServer {
                 System.out.println("I/O ready");
 
                 while (client.isConnected()) {
-                    Building request = (Building) Buildings.deserializeBuilding(in);
+                    Building request;
+                    try {
+                        request = (Building) Buildings.deserializeBuilding(in);
+                    } catch (EOFException e) {
+                        break;
+                    }
                     System.out.println("Received new request");
 
                     System.out.println("Preparing respond...");
@@ -63,14 +70,14 @@ public class SerialServer {
                     out.println(respond);
                     System.out.println("Respond sent");
                 }
-                System.out.println("Closing connection...");
+                System.out.println("Client #" + number + " disconnected");
+                System.out.println("Closing resources...");
                 in.close();
                 out.close();
                 client.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

@@ -105,8 +105,8 @@ public class BinaryClient {
 
         if (bLines.size() != tLines.size()) {
             throw new InputFilesDifferentLengthException(
-                    "sizes: " + bLines.size() +
-                    ", " + tLines.size()
+                    "buildings file size: " + bLines.size() + " lines" +
+                    ", types file size: " + tLines.size() + " lines"
             );
         }
 

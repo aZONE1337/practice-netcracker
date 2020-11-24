@@ -7,17 +7,13 @@ import ru.netcracker.practice.buildings.util.factory.BuildingFactory;
 import ru.netcracker.practice.buildings.util.factory.DwellingFactory;
 import ru.netcracker.practice.buildings.util.factory.HotelFactory;
 import ru.netcracker.practice.buildings.util.factory.OfficeFactory;
-import ru.netcracker.practice.buildings.util.list.DoublyLinkedList;
-import ru.netcracker.practice.buildings.util.list.SinglyLinkedList;
 import ru.netcracker.practice.buildings.util.other.Buildings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -39,6 +35,7 @@ public class BuildingForm {
     private JPanel panel2;
     private JPanel panel3;
     private JPanel panel4;
+    private JScrollPane scrollPane;
     private JMenuBar menuBar;
 
     private File buildingFile;
@@ -49,7 +46,7 @@ public class BuildingForm {
         frame.setContentPane(rootPanel);
         frame.setJMenuBar(createMenuBar());
 
-        frame.setResizable(false);
+//        frame.setResizable(false);
         frame.setSize(800, 300);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
