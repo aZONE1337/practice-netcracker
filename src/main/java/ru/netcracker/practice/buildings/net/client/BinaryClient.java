@@ -4,7 +4,6 @@ import ru.netcracker.practice.buildings.exceptions.InputFilesDifferentLengthExce
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,6 +12,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BinaryClient {
+    private static final int PORT = 1337;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -22,7 +23,7 @@ public class BinaryClient {
         Path buildings = Paths.get(objsPath);
         Path types = Paths.get(typesPath);
 
-        try (Socket socket = new Socket("localhost", 3345)) {
+        try (Socket socket = new Socket("localhost", PORT)) {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
                             socket.getInputStream()));

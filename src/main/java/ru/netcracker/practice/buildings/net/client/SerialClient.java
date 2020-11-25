@@ -9,7 +9,6 @@ import ru.netcracker.practice.buildings.util.other.Buildings;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -17,6 +16,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SerialClient {
+    private static final int PORT = 1337;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -26,7 +27,7 @@ public class SerialClient {
         Path buildings = Paths.get(objsPath);
         Path types = Paths.get(typesPath);
 
-        try (Socket socket = new Socket("localhost", 1337)) {
+        try (Socket socket = new Socket("localhost", PORT)) {
              ObjectInputStream in = new ObjectInputStream(
                      socket.getInputStream());
              ObjectOutputStream out = new ObjectOutputStream(
