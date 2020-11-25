@@ -29,13 +29,13 @@ public class MainApp {
 
         Space o31 = new Office(31.0f, 1);
 
-        Floor of1 = new OfficeFloor(new Space[]{o11, o12, o13});
-        Floor of2 = new OfficeFloor(new Space[]{o21, o22});
-        Floor of3 = new OfficeFloor(new Space[]{o31});
+        Floor of1 = new OfficeFloor(o11, o12, o13);
+        Floor of2 = new OfficeFloor(o21, o22);
+        Floor of3 = new OfficeFloor(o31);
 
         System.out.println(of1.toString());
 
-        Building ob = new OfficeBuilding(new Floor[]{of1, of2, of3});
+        Building ob = new OfficeBuilding(of1, of2, of3);
 
         System.out.println("best space: " + ob.getBestSpace() +
                 ", total offices: " + ob.getBuildingSpaces() +
@@ -44,7 +44,7 @@ public class MainApp {
         );
 
         ((OfficeBuilding) ob).addOffice(1, new Office(9999.0f, 99));
-        ob.changeFloor(2, new OfficeFloor(new Space[]{new Office(777.0f, 77)}));
+        ob.changeFloor(2, new OfficeFloor(new Office(777.0f, 77)));
         ob.setSpace(3, new Office(5555.0f, 55));
         ob.removeSpace(2);
 
@@ -60,8 +60,8 @@ public class MainApp {
 
         //IO, serialization, clone tests
         try {
-            Buildings.serializeBuilding(ob, new FileOutputStream(new File("building.ser")));
-            Building obRead = (Building) Buildings.deserializeBuilding(new FileInputStream(new File("building.ser")));
+            Buildings.serializeBuilding(ob, new FileOutputStream(new File("src/main/resources/building.ser")));
+            Building obRead = (Building) Buildings.deserializeBuilding(new FileInputStream(new File("src/main/resources/building.ser")));
             Buildings.outputBuilding(obRead, System.out);
             System.out.println(obRead.toString());
 

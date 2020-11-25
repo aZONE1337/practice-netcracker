@@ -8,12 +8,19 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class BinaryClient {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        String objsPath = "src/main/resources/buildings.txt";
+        String typesPath = "src/main/resources/building_types.txt";
+
+        Path buildings = Paths.get(objsPath);
+        Path types = Paths.get(typesPath);
 
         try (Socket socket = new Socket("localhost", 3345)) {
             BufferedReader in = new BufferedReader(
@@ -22,86 +29,51 @@ public class BinaryClient {
             BufferedWriter out = new BufferedWriter(
                     new OutputStreamWriter(
                             socket.getOutputStream()));
-//            BufferedWriter fOut = new BufferedWriter(
-//                    new FileWriter(
-//                            new File("src/main/resources/buildings_prices.txt")));
-            System.out.println("I/O created");
+            BufferedWriter fOut = new BufferedWriter(
+                    new FileWriter(
+                            new File("src/main/resources/buildings_prices.txt")));
+            System.out.println("I/O channels opened");
 
             while (true) {
-                String request = null;
+                System.out.println("Want to resume? Y/N");
+                if (!scanner.nextLine().toLowerCase().contains("y"))
+                    break;
 
-                String objsPath = "src/main/resources/buildings.txt";
-                String typesPath = "src/main/resources/building_types.txt";
-//                System.out.println("Enter path to buildings.txt");
-//                objsPath = scanner.nextLine();
-//                System.out.println("Enter path to building_types.txt");
-//                typesPath = scanner.nextLine();
-//
-//                if (objsPath.equalsIgnoreCase("quit") ||
-//                typesPath.equalsIgnoreCase("quit")) {
-//                    request = "quit";
-//                }
+                List<String> forRequests = prepareDataLines(buildings, types);
+                System.out.println("Data for requests prepared");
 
-                System.out.println("Write \"quit\" to disconnect");
-                if (scanner.nextLine().equalsIgnoreCase("quit")) {
-                    request = "quit";
-                }
-
-
-                Path buildings = Paths.get(objsPath);
-                Path types = Paths.get(typesPath);
-
-                if (Files.exists(buildings) && Files.exists(types)) {
-                    System.out.println("Preparing request...");
-                    request = readBuildings(
-                            buildings,
-                            types
-                    );
-                }
-
-                if (request != null) {
-                    if (request.equalsIgnoreCase("quit")) {
-                        out.write(request);
-                        out.newLine();
-                        out.flush();
-                        socket.close();
-                        System.out.println("Quit request");
-                        System.out.println("Closing connection");
+                for (String request : forRequests) {
+                    System.out.println("Want to continue? Y/N");
+                    if (!scanner.nextLine().toLowerCase().contains("y"))
                         break;
-                    }
 
                     out.write(request);
                     out.newLine();
-                    System.out.println("Request ready");
-                } else {
-                    System.out.println("Request null");
+                    out.flush();
+                    System.out.println("Sent request to server");
+
+                    String response = in.readLine();
+                    System.out.println("Price from response: " + response);
+
+                    System.out.println("Writing to file...");
+                    fOut.write(response);
+                    fOut.flush();
                 }
-
-                out.flush();
-                System.out.println("Request sent");
-
-                String response = in.readLine();
-                System.out.println("Price is: " + response);
-
-//                System.out.println("Writing to file...");
-//                fOut.write(response.replaceAll("_", "\n"));
-//                fOut.flush();
-
-                break;
+                System.out.println("Prices file is ready");
             }
+            System.out.println("Closing resources...");
             in.close();
             out.close();
-            System.out.println("I/O closed");
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
+            fOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String readBuildings(Path buildings, Path types) throws IOException {
+    public static List<String> prepareDataLines(Path buildings, Path types) throws IOException {
         List<String> bLines = Files.readAllLines(buildings);
         List<String> tLines = Files.readAllLines(types);
+        List<String> result = new ArrayList<>();
 
         if (bLines.size() != tLines.size()) {
             throw new InputFilesDifferentLengthException(
@@ -110,15 +82,10 @@ public class BinaryClient {
             );
         }
 
-        StringBuilder sb = new StringBuilder();
-
         for (int i = 0; i < bLines.size(); i++) {
-            sb.append(bLines.get(i))
-                    .append("_")
-                    .append(tLines.get(i))
-                    .append("-");
+            result.add(bLines.get(i) + "_" + tLines.get(i));
         }
 
-        return sb.toString();
+        return result;
     }
 }

@@ -12,41 +12,37 @@ public class SerialServer {
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(1337)) {
 
-            while (!server.isClosed()) {
+            while (true) {
                 Socket client = server.accept();
                 System.out.println("Client connected");
 
-                ObjectInputStream in = new ObjectInputStream(client.getInputStream());
-                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+                ObjectInputStream in = new ObjectInputStream(
+                        client.getInputStream());
+                ObjectOutputStream out = new ObjectOutputStream(
+                        client.getOutputStream());
                 System.out.println("I/O channels opened");
 
                 while (client.isConnected()) {
 
-                    Building request = (Building) Buildings.deserializeBuilding(in);
-                    System.out.println("Received request");
-                    System.out.println(request.toString());
+                    Object request = Buildings.deserializeBuilding(in);
+                    System.out.println("Got new request");
 
-                    System.out.println("Preparing respond");
-                    String respond;
+                    System.out.println("Preparing response");
+                    Object response;
                     try {
-                        respond = BinaryServer.costEstimate(request) + "$";
+                        response = BinaryServer.costEstimate((Building) request) + "$";
                     } catch (BuildingUnderArrestException e) {
-                        respond = "Building is under arrest";
+                        response = new BuildingUnderArrestException("");
                         e.printStackTrace();
                     }
-                    out.write(respond);
-                    out.newLine();
-
+                    out.writeObject(response);
                     out.flush();
-                    System.out.println("Respond sent");
+                    System.out.println("Response sent");
                 }
-
-                System.out.println("Closing resources...");
+                System.out.println("Client disconnected");
                 in.close();
                 out.close();
-                System.out.println("I/O channels closed");
                 client.close();
-                System.out.println("Client disconnected");
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
