@@ -1,8 +1,8 @@
 # practice-netcracker
 home tasks from netcracker
-## Task 1. Packages
+## Task 1. Packages (Done)
 console work only
-## Task 2. Basics
+## Task 2. Basics (Done)
 ###### Задание на практическую работу
 В процессе написания тестовых заданий ознакомьтесь с основными конструкциями
 языка Java, принципами создания классов и объектов.
@@ -73,7 +73,7 @@ console work only
 соглашений об именовании. При изменении количества элементов в массиве создавайте
 новый массив и сохраняйте его на место старого. Все поля сделайте приватными, все
 конструкторы, методы доступа и бизнес-методы – публичными.
-## Task 3. Dynamic structures
+## Task 3. Dynamic structures (Done)
 ###### Задание на практическую работу
 * В процессе написания тестовых заданий ознакомьтесь с принципами создания динамических структур в Java, механизмом исключений и концепцией интерфейсов.
 * В процессе выполнения задания НЕЛЬЗЯ пользоваться утилитными классами Java.
@@ -194,11 +194,11 @@ console work only
 * Используйте методы, принимающие массивы в качестве параметра, как методы с аргументом переменной длины.
 * Все поля сделайте приватными, конструкторы, бизнес-методы и методы доступа – публичными.
 
-## Task 4. Interfaces, Java IO
-## Task 5. Object class
-## Task 6. Inheritance and Patterns
-## Task 7. Multi-threading
-## Task 8. Client-Server apps
-## Task 9. Java Swing
-## Task 10. Reflection API
-## Task 11. Java 8
+## Task 4. Interfaces, Java IO (Done)
+## Task 5. Object class (Done)
+## Task 6. Inheritance and Patterns (Done)
+## Task 7. Multi-threading (Half done)
+## Task 8. Client-Server apps (Done)
+## Task 9. Java Swing (Done)
+## Task 10. Reflection API (Done)
+## Task 11. Java 8 (Done)
