@@ -10,7 +10,7 @@ import ru.netcracker.practice.buildings.net.server.sequential.BinaryServer;
 
 public class ParallelBinaryServer {
     private static final ExecutorService executorService = Executors.newFixedThreadPool(10);
-    private static final int PORT = 1338;
+    private static final int PORT = 1337;
     private static int count = 0;
 
 

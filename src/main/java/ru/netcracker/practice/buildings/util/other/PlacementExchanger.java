@@ -1,7 +1,7 @@
 package ru.netcracker.practice.buildings.util.other;
 
-import ru.netcracker.practice.buildings.exceptions.InexchangeableFloorsException;
-import ru.netcracker.practice.buildings.exceptions.InexchangeableSpacesException;
+import ru.netcracker.practice.buildings.exceptions.NonexchangeableFloorsException;
+import ru.netcracker.practice.buildings.exceptions.NonexchangeableSpacesException;
 import ru.netcracker.practice.buildings.exceptions.SpaceIndexOutOfBoundsException;
 import ru.netcracker.practice.buildings.interfaces.Building;
 import ru.netcracker.practice.buildings.interfaces.Floor;
@@ -20,7 +20,7 @@ public class PlacementExchanger {
         return fl1.getTotalSpaces() == fl2.getTotalSpaces() && fl1.getTotalArea() == fl2.getTotalArea();
     }
 
-    public static void exchangeFloorRooms(Floor fl1, int index1, Floor fl2, int index2) throws InexchangeableSpacesException {
+    public static void exchangeFloorRooms(Floor fl1, int index1, Floor fl2, int index2) throws NonexchangeableSpacesException {
         if (index1 >= fl1.getTotalSpaces() || index2 >= fl2.getTotalSpaces()) {
             throw new SpaceIndexOutOfBoundsException("index1=" + index1 + ", index2=" + index2);
         }
@@ -30,11 +30,11 @@ public class PlacementExchanger {
             fl1.setSpace(index1, sp2);
             fl2.setSpace(index2, sp1);
         } else {
-            throw new InexchangeableSpacesException();
+            throw new NonexchangeableSpacesException();
         }
     }
 
-    public static void exchangeBuildingFloors(Building bu1, int index1, Building bu2, int index2) throws InexchangeableFloorsException {
+    public static void exchangeBuildingFloors(Building bu1, int index1, Building bu2, int index2) throws NonexchangeableFloorsException {
         if (index1 >= bu1.getBuildingFloors() || index2 >= bu2.getBuildingFloors()) {
             throw new SpaceIndexOutOfBoundsException("index1=" + index1 + ", index2=" + index2);
         }
@@ -44,7 +44,7 @@ public class PlacementExchanger {
             bu1.changeFloor(index1, fl2);
             bu2.changeFloor(index2, fl1);
         } else {
-            throw new InexchangeableFloorsException();
+            throw new NonexchangeableFloorsException();
         }
     }
 }

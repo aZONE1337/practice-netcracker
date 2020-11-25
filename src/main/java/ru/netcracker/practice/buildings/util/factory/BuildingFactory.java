@@ -12,9 +12,9 @@ public interface BuildingFactory {
 
     Floor createFloor(int spacesAmount);
 
-    Floor CreateFloor(Space[] spaces);
+    Floor CreateFloor(Space... spaces);
 
     Building createBuilding(int floorsAmount, int[] spacesOnFloor);
 
-    Building createBuilding(Floor[] floors);
+    Building createBuilding(Floor... floors);
 }

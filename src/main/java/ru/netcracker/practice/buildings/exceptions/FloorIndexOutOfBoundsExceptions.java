@@ -1,9 +1,6 @@
 package ru.netcracker.practice.buildings.exceptions;
 
 public class FloorIndexOutOfBoundsExceptions extends IndexOutOfBoundsException {
-    public FloorIndexOutOfBoundsExceptions() {
-    }
-
     public FloorIndexOutOfBoundsExceptions(String s) {
         super(s);
     }

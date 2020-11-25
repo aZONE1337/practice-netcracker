@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.Random;
 
 public class BinaryServer {
-    private static final int PORT = 1338;
+    private static final int PORT = 1337;
     private static int count = 0;
 
     public static void main(String[] args) {

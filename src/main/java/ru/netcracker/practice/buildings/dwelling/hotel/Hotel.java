@@ -34,7 +34,7 @@ public class Hotel extends Dwelling implements Serializable {
     @Override
     public Space getBestSpace() {
         Floor[] floors = getFloorsAsArray();
-        Space max = new Flat(0.1f, 0);
+        Space max = new Flat(0, 0.1f);
         for (Floor floor : floors) {
             if (floor instanceof HotelFloor) {
                 float coeff = ((HotelFloor) floor).getCoeff();

@@ -30,6 +30,19 @@ public class Buildings {
         return getBuildingFromString(sb.toString());
     }
 
+    public static Building inputBuilding(InputStream in,
+                                         Class<? extends Building> buildingClass,
+                                         Class<? extends Floor> floorClass,
+                                         Class<? extends Space> spaceClass) throws IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        BufferedInputStream bufIn = new BufferedInputStream(in);
+        int x;
+        StringBuilder sb = new StringBuilder();
+        while ((x = bufIn.read()) != 10) {
+            sb.append((char) x);
+        }
+        return getBuildingFromString(sb.toString(), buildingClass, floorClass, spaceClass);
+    }
+
     public static void writeBuilding(Building building, Writer out) throws IOException {
         BufferedWriter bufOut = new BufferedWriter(out);
         bufOut.write(deconstruct(building));
@@ -71,6 +84,26 @@ public class Buildings {
         return createBuilding(floors);
     }
 
+    private static Building getBuildingFromString(String buildingStr,
+                                                  Class<? extends Building> buildingClass,
+                                                  Class<? extends Floor> floorClass,
+                                                  Class<? extends Space> spaceClass) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        String[] params = buildingStr.split(" ");
+        Floor[] floors = new Floor[Integer.parseInt(params[0])];
+        int k = 1;
+        for (int i = 0; i < Integer.parseInt(params[0]); i++) {
+            int spacesAmount = Integer.parseInt(params[k]);
+            Space[] spaces = new Space[spacesAmount];
+            for (int j = 0; j < spacesAmount; j++) {
+                Space space = createSpace(spaceClass, Integer.parseInt(params[j * 2 + k + 1]), Float.parseFloat(params[j * 2 + k + 2]));
+                spaces[j] = space;
+            }
+            floors[i] = createFloor(floorClass, spaces);
+            k += 2 * spacesAmount + 1;
+        }
+        return createBuilding(buildingClass, floors);
+    }
+
     private static String deconstruct(Building building) {
         StringBuilder sb = new StringBuilder();
         sb.append(building.getBuildingFloors()).append(" ");
@@ -101,7 +134,7 @@ public class Buildings {
         }
     }
 
-    public static <T extends Space> Space createSpace(float area) {
+    public static Space createSpace(float area) {
         return buildingFactory.createSpace(area);
     }
 
@@ -109,20 +142,32 @@ public class Buildings {
         return buildingFactory.createSpace(rooms, area);
     }
 
+    public static Space createSpace(Class<? extends Space> spaceClass, int rooms, float area) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return spaceClass.getDeclaredConstructor(int.class, float.class).newInstance(rooms, area);
+    }
+
     public static Floor createFloor(int spacesAmount) {
         return buildingFactory.createFloor(spacesAmount);
     }
 
-    public static <T extends Floor> Floor createFloor(Space[] spaces) {
+    public static Floor createFloor(Space... spaces) {
         return buildingFactory.CreateFloor(spaces);
+    }
+
+    public static Floor createFloor(Class<? extends Floor> floorClass, Space... spaces) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return floorClass.getDeclaredConstructor(Space[].class).newInstance((Object) spaces);
     }
 
     public static Building createBuilding(int floorsAmount, int[] spacesOnFloor) {
         return buildingFactory.createBuilding(floorsAmount, spacesOnFloor);
     }
 
-    public static <T extends Building> Building createBuilding(Floor[] floors) {
+    public static Building createBuilding(Floor... floors) {
         return buildingFactory.createBuilding(floors);
+    }
+
+    public static Building createBuilding(Class<? extends Building> buildingClass, Floor... floors) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return buildingClass.getDeclaredConstructor(Floor[].class).newInstance((Object) floors);
     }
 
     public static void setBuildingFactory(BuildingFactory buildingFactory) {

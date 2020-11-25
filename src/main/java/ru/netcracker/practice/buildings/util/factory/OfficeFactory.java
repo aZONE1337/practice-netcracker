@@ -16,7 +16,7 @@ public class OfficeFactory implements BuildingFactory {
 
     @Override
     public Space createSpace(int rooms, float area) {
-        return new Office(area, rooms);
+        return new Office(rooms, area);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class OfficeFactory implements BuildingFactory {
     }
 
     @Override
-    public Floor CreateFloor(Space[] spaces) {
+    public Floor CreateFloor(Space... spaces) {
         return new OfficeFloor(spaces);
     }
 
@@ -35,7 +35,7 @@ public class OfficeFactory implements BuildingFactory {
     }
 
     @Override
-    public Building createBuilding(Floor[] floors) {
+    public Building createBuilding(Floor... floors) {
         return new OfficeBuilding(floors);
     }
 }

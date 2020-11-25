@@ -36,7 +36,6 @@ public class BuildingForm {
     private JPanel panel3;
     private JPanel panel4;
     private JScrollPane scrollPane;
-    private JMenuBar menuBar;
 
     private File buildingFile;
 
@@ -71,13 +70,7 @@ public class BuildingForm {
                 try {
                     UIManager.setLookAndFeel(lookAndFeelInfo.getClassName());
                     rootPanel.repaint();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedLookAndFeelException e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     e.printStackTrace();
                 }
             });

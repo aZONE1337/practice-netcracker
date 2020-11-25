@@ -188,7 +188,7 @@ public class Dwelling implements Building, Serializable, Cloneable {
             }
         }
         //bubble sort
-        Buildings.sort(flats, Comparable::compareTo);
+        Buildings.sort(new Space[]{flats}, Comparable::compareTo);
         return flats;
     }
 

@@ -1,8 +1,6 @@
 package ru.netcracker.practice.buildings.exceptions;
 
 public class SpaceIndexOutOfBoundsException extends IndexOutOfBoundsException {
-    public SpaceIndexOutOfBoundsException() {
-    }
 
     public SpaceIndexOutOfBoundsException(String s) {
         super(s);

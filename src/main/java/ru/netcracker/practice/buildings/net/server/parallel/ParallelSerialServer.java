@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 
 public class ParallelSerialServer {
     private static final ExecutorService executorService = Executors.newFixedThreadPool(10);
-    private static final int PORT = 1338;
+    private static final int PORT = 1337;
     private static int count = 0;
 
     public static void main(String[] args) {

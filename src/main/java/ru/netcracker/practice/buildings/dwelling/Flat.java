@@ -32,7 +32,7 @@ public class Flat implements Space, Serializable, Cloneable {
     }
 
     //Конструктор, который принимает площадь и кол. комнат
-    public Flat(float flatArea, int rooms) {
+    public Flat(int rooms, float flatArea) {
         if (isNegativeOrZero(Float.toString(flatArea))) {
             throw new InvalidSpaceAreaException(area);
         } else {
@@ -103,6 +103,6 @@ public class Flat implements Space, Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new Flat(this.area, this.rooms);
+        return new Flat(this.rooms, this.area);
     }
 }

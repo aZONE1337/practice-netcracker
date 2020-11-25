@@ -206,7 +206,7 @@ public class OfficeBuilding implements Building, Serializable {
             }
         }
         //bubble sort
-        Buildings.sort(offices, Comparable::compareTo);
+        Buildings.sort(new Space[]{offices}, Comparable::compareTo);
         return offices;
     }
 

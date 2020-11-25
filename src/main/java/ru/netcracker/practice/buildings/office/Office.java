@@ -30,7 +30,7 @@ public class Office implements Space, Serializable {
     }
 
     //конструктор принимающий все значения полей
-    public Office(float area, int rooms) {
+    public Office(int rooms, float area) {
         if (Math.signum(area) == -1.0f) {
             throw new InvalidSpaceAreaException(area);
         }
@@ -89,6 +89,6 @@ public class Office implements Space, Serializable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new Office(this.area, this.rooms);
+        return new Office(this.rooms, this.area);
     }
 }

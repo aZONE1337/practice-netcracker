@@ -14,20 +14,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MainApp {
     public static void main(String[] args) {
-        Office o11 = new Office(11.0f, 1);
-        Space o12 = new Office(12.0f, 2);
-        Space o13 = new Office(13.0f, 3);
+        Office o11 = new Office(1, 11.0f);
+        Space o12 = new Office(2, 12.0f);
+        Space o13 = new Office(3, 13.0f);
 
-        Space o21 = new Office(21.0f, 1);
-        Space o22 = new Office(22.0f, 2);
+        Space o21 = new Office(1, 21.0f);
+        Space o22 = new Office(2, 22.0f);
 
-        Space o31 = new Office(31.0f, 1);
+        Space o31 = new Office(1, 31.0f);
 
         Floor of1 = new OfficeFloor(o11, o12, o13);
         Floor of2 = new OfficeFloor(o21, o22);
@@ -43,9 +41,9 @@ public class MainApp {
                 ", total area: " + ob.getBuildingArea()
         );
 
-        ((OfficeBuilding) ob).addOffice(1, new Office(9999.0f, 99));
-        ob.changeFloor(2, new OfficeFloor(new Office(777.0f, 77)));
-        ob.setSpace(3, new Office(5555.0f, 55));
+        ((OfficeBuilding) ob).addOffice(1, new Office(99, 9999.0f));
+        ob.changeFloor(2, new OfficeFloor(new Office(77, 777.0f)));
+        ob.setSpace(3, new Office(55, 5555.0f));
         ob.removeSpace(2);
 
         System.out.println("best space: " + ob.getBestSpace() +
@@ -70,8 +68,8 @@ public class MainApp {
             Office clone2 = (Office) o11.clone();
 
             o11.setArea(100000000.0f);
-            of1.setSpace(1, new Office(11111111111.0f, 99999999));
-            ob.setSpace(2, new Office(1000000.0f, 1000000000));
+            of1.setSpace(1, new Office(99999999, 11111111111.0f));
+            ob.setSpace(2, new Office(1000000000, 1000000.0f));
 
             System.out.println("Office clone:");
             System.out.println(clone2 == o11);
@@ -98,8 +96,8 @@ public class MainApp {
         Space[] spaces1 = new Space[100];
         Space[] spaces2 = new Space[100];
         for (int i = 0; i < 100; i++) {
-            spaces1[i] = new Office(15.0f, 1);
-            spaces2[i] = new Office(10.0f, 3);
+            spaces1[i] = new Office(1, 15.0f);
+            spaces2[i] = new Office(3, 10.0f);
         }
         Floor testFloor1 = new OfficeFloor(spaces1);
         Floor testFloor2 = new OfficeFloor(spaces2);
