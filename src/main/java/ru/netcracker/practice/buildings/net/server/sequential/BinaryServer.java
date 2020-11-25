@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.Random;
 
 public class BinaryServer {
-    private static final int PORT = 1337;
+    private static final int PORT = 1338;
     private static int count = 0;
 
     public static void main(String[] args) {
@@ -56,14 +56,19 @@ public class BinaryServer {
                      new BufferedWriter(
                              new OutputStreamWriter(client.getOutputStream())), true))
         {
-            System.out.println("I/O ready");
+            System.out.println("I/O channels opened");
             while (client.isConnected()) {
-                String request = in.readLine();
+                Building request;
+                try {
+                    request = Buildings.readBuilding(in);
+                } catch (NullPointerException e) {
+                    break;
+                }
                 System.out.println("Received new request");
 
                 String response;
                 try {
-                    response = BinaryServer.costEstimate(Buildings.getBuildingFromString(request)) + "$";
+                    response = BinaryServer.costEstimate(request) + "$";
                 } catch (BuildingUnderArrestException e) {
                     response = "Building is under arrest";
                 }
@@ -71,7 +76,7 @@ public class BinaryServer {
                 out.println(response);
                 System.out.println("Response sent");
             }
-            System.out.println("Client" + number + "disconnected");
+            System.out.println("Client #" + number + " disconnected");
             client.close();
         } catch (IOException e) {
             e.printStackTrace();

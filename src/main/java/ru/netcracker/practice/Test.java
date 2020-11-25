@@ -1,6 +1,7 @@
 package ru.netcracker.practice;
 
 import ru.netcracker.practice.buildings.interfaces.Building;
+import ru.netcracker.practice.buildings.net.client.BinaryClient;
 import ru.netcracker.practice.buildings.net.client.SerialClient;
 import ru.netcracker.practice.buildings.util.other.Buildings;
 
@@ -33,5 +34,7 @@ public class Test {
 //        }
 //
 //        System.out.println("READY!");
+//        SerialClient.main(args);
+        BinaryClient.main(args);
     }
 }

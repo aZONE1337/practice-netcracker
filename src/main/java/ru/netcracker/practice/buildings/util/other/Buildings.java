@@ -33,6 +33,7 @@ public class Buildings {
     public static void writeBuilding(Building building, Writer out) throws IOException {
         BufferedWriter bufOut = new BufferedWriter(out);
         bufOut.write(deconstruct(building));
+        bufOut.newLine();
         bufOut.flush();
     }
 

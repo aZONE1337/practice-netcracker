@@ -9,7 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SerialServer {
-    private static final int PORT = 1337;
+    private static final int PORT = 1338;
     private static int count = 0;
 
     public static void main(String[] args) {
@@ -29,10 +29,10 @@ public class SerialServer {
     }
 
     public static void respond(Socket client, int number) {
-        try (ObjectInputStream in = new ObjectInputStream(
-                client.getInputStream());
-             ObjectOutputStream out = new ObjectOutputStream(
-                     client.getOutputStream()))
+        try (ObjectOutputStream out = new ObjectOutputStream(
+                client.getOutputStream());
+             ObjectInputStream in = new ObjectInputStream(
+                client.getInputStream()))
         {
             System.out.println("I/O channels opened");
 
@@ -45,7 +45,6 @@ public class SerialServer {
                 }
                 System.out.println("Received new request");
 
-                System.out.println("Preparing response...");
                 Object response;
                 try {
                     response = BinaryServer.costEstimate((Building) request) + "$";

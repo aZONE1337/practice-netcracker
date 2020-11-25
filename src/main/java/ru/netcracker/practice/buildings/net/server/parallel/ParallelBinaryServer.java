@@ -3,7 +3,6 @@ package ru.netcracker.practice.buildings.net.server.parallel;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -11,7 +10,7 @@ import ru.netcracker.practice.buildings.net.server.sequential.BinaryServer;
 
 public class ParallelBinaryServer {
     private static final ExecutorService executorService = Executors.newFixedThreadPool(10);
-    private static final int PORT = 1337;
+    private static final int PORT = 1338;
     private static int count = 0;
 
 
