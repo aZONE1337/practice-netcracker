@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BinaryClient {
-    private static final int PORT = 1338;
+    private static final int PORT = 1337;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

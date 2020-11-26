@@ -188,7 +188,7 @@ public class Dwelling implements Building, Serializable, Cloneable {
             }
         }
         //bubble sort
-        Buildings.sort(new Space[]{flats}, Comparable::compareTo);
+        Buildings.sort(flats, Comparable::compareTo);
         return flats;
     }
 
@@ -227,6 +227,10 @@ public class Dwelling implements Building, Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new Dwelling(this.getFloorsAsArray());
+        Floor[] floors = new Floor[floorsAmount];
+        for (int i = 0; i < floorsAmount; i++) {
+            floors[i] = (Floor) this.floors[i].clone();
+        }
+        return new Dwelling(floors);
     }
 }

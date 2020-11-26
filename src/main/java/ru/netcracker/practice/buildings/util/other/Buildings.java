@@ -119,12 +119,27 @@ public class Buildings {
         return sb.substring(0, sb.toString().length() - 1);
     }
 
-    public static <T extends Comparable<T>> void sort(T[] objects, Comparator<T> comparator) {
+    public static <T> void sort(T[] objects, Comparator<T> comparator) {
         boolean isSorted = false;
         while (!isSorted) {
             isSorted = true;
             for (int i = 0; i < objects.length - 1; i++) {
                 if (comparator.compare(objects[i], objects[i + 1]) < 0) {
+                    isSorted = false;
+                    T temp = objects[i];
+                    objects[i] = objects[i + 1];
+                    objects[i + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public static <T extends Comparable<T>> void sort(T[] objects) {
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < objects.length - 1; i++) {
+                if (objects[i].compareTo(objects[i + 1]) < 0) {
                     isSorted = false;
                     T temp = objects[i];
                     objects[i] = objects[i + 1];
