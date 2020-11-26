@@ -180,6 +180,10 @@ public class DwellingFloor implements Floor, Serializable, Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        return new DwellingFloor(this.flats);
+        Space[] flats = new Space[flatsAmount];
+        for (int i = 0; i < flatsAmount; i++) {
+            flats[i] = (Space) this.flats[i].clone();
+        }
+        return new DwellingFloor(flats);
     }
 }
