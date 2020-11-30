@@ -119,7 +119,7 @@ public class Buildings {
         return sb.substring(0, sb.toString().length() - 1);
     }
 
-    public static <T> void sort(T[] objects, Comparator<T> comparator) {
+    public static <T> void sort(T[] objects, Comparator<? super T> comparator) {
         boolean isSorted = false;
         while (!isSorted) {
             isSorted = true;

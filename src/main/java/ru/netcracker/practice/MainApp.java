@@ -6,8 +6,7 @@ import ru.netcracker.practice.buildings.interfaces.Space;
 import ru.netcracker.practice.buildings.office.Office;
 import ru.netcracker.practice.buildings.office.OfficeBuilding;
 import ru.netcracker.practice.buildings.office.OfficeFloor;
-import ru.netcracker.practice.buildings.threads.Cleaner;
-import ru.netcracker.practice.buildings.threads.Repairer;
+import ru.netcracker.practice.buildings.threads.*;
 import ru.netcracker.practice.buildings.util.other.Buildings;
 
 import java.io.File;
@@ -15,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
 
 public class MainApp {
     public static void main(String[] args) {
@@ -93,17 +93,27 @@ public class MainApp {
         }
 
         //thread tests
-        Space[] spaces1 = new Space[100];
-        Space[] spaces2 = new Space[100];
-        for (int i = 0; i < 100; i++) {
+        Space[] spaces1 = new Space[50];
+        Space[] spaces2 = new Space[spaces1.length];
+        for (int i = 0; i < spaces1.length; i++) {
             spaces1[i] = new Office(1, 15.0f);
             spaces2[i] = new Office(3, 10.0f);
         }
+
         Floor testFloor1 = new OfficeFloor(spaces1);
         Floor testFloor2 = new OfficeFloor(spaces2);
-        Thread repairer = new Repairer(testFloor1);
-        Thread cleaner = new Cleaner(testFloor2);
-        repairer.start();
-        cleaner.start();
+
+        Semaphore semaphore = new Semaphore(1, true);
+
+        Thread repairer = new Thread(new SequentialRepairer(testFloor1, semaphore));
+        Thread cleaner = new Thread(new SequentialCleaner(testFloor1, semaphore));
+
+        try {
+            repairer.start();
+            cleaner.start();
+            cleaner.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

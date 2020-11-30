@@ -16,14 +16,12 @@ public class Cleaner extends Thread {
             if (!isInterrupted()) {
                 int index = 0;
                 for (Space space : floor.getSpacesAsArray()) {
-                    synchronized (Space.class) {
-                        System.out.println("Cleaning room number " +
-                                index +
-                                " with total area " +
-                                space.getArea() +
-                                " square meters");
-                        index++;
-                    }
+                    System.out.println("Cleaning room number " +
+                            index +
+                            " with total area " +
+                            space.getArea() +
+                            " square meters");
+                    index++;
                     if (index == floor.getTotalSpaces()) {
                         System.out.println("0 spaces left! Ended cleaning.");
                     }

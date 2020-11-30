@@ -197,7 +197,7 @@ console work only
 ## Task 4. Interfaces, Java IO (Done)
 ## Task 5. Object class (Done)
 ## Task 6. Inheritance and Patterns (Done)
-## Task 7. Multi-threading (Half done)
+## Task 7. Multi-threading (Done)
 ## Task 8. Client-Server apps (Done)
 ## Task 9. Java Swing (Done)
 ## Task 10. Reflection API (Done)
